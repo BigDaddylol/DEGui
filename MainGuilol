@@ -1,5 +1,3 @@
-
-
 local guiTitle = "Pure Hub"
 
 if game.CoreGui:FindFirstChild(guiTitle) then
@@ -36,7 +34,11 @@ local sect2 = categ1:CreateSection("Settings")
 local sect3 = categ2:CreateSection("Player Scripts")
 local sect4 = categ3:CreateSection("Game Hacks Loader")
 
--- User Interactables
+-- Functions
+
+function Tpchar(cframe)
+	char.HumanoidRootPart.CFrame = cframe
+end
 
 -- Credits
 local cred1 = sect1:Create("Textlabel", "Scripts by: Ham#1591")
@@ -639,6 +641,7 @@ local function drivinEmpir()
 	)
 
 	pumpstate = false
+	bruh = 1
 
 	local pumpkinAuto = sect5:Create("Toggle", "Pumpkin AutoFarm",
 			function()
@@ -649,13 +652,24 @@ local function drivinEmpir()
 						
 						if pumpStor:FindFirstChild("_p") then
 								v = pumpStor["_p"]
-								v.CanCollide = false
-								v.CanCollide = true
-								v.Face.CanCollide = false
-								v.Face.CanCollide = true
-								v.Stem.CanCollide = false
-								v.Stem.CanCollide = true
-								char.HumanoidRootPart.CFrame = v.Face.CFrame + Vector3.new(0, 10, 0)
+
+								if v.Position.Y > 0 then
+									v.CanCollide = false
+									v.CanCollide = true
+									v.Face.CanCollide = false
+									v.Face.CanCollide = true
+									v.Stem.CanCollide = false
+									v.Stem.CanCollide = true
+									if bruh == 1 then
+										char.HumanoidRootPart.CFrame = v.Face.CFrame + Vector3.new(0, 10, 0)
+										bruh = 0
+									elseif bruh == 0 then
+										char.HumanoidRootPart.CFrame = v.Face.CFrame + Vector3.new(0, 15, 0)
+										bruh = 1
+									end
+								end
+							else
+								print("No more pumpkins detected in workspace.")
 						end
 						wait(1)
 					until pumpstate == false
@@ -667,6 +681,62 @@ local function drivinEmpir()
 			default = false
 		}
 	)
+
+	tpdrop = sect5:Create("Dropdown", "Teleports",
+		function(v)
+			selloctn = v
+		end,
+		{
+			options = {
+				"Cars & Mortorcycles Dealer",
+				"City Dealer",
+				"Boat Dealer",
+				"Helocopter & Plane Dealer",
+				"Around The City Race",
+				"Circuit Race",
+				"City 1/4 Mile",
+				"Drag Race",
+				"Highway Race",
+				"Mountain Dash"
+			},
+
+			default = "Cars & Mortorcycles Dealer",
+			search = true
+		}
+	)
+
+	local tpthingtp = sect5:Create("Button", "Tp to selected location",
+		function()
+			if selloctn == "Cars & Mortorcycles Dealer" then
+				Tpchar(CFrame.new(-246.507, 26, -961.918))
+			elseif selloctn == "City Dealer" then
+				Tpchar(CFrame.new(-1736, 14.2, 2515))
+			elseif selloctn == "Boat Dealer" then
+				Tpchar(CFrame.new(-1471.5, 14.2, 2312))
+			elseif selloctn == "Helocopter & Plane Dealer" then
+				Tpchar(CFrame.new(165, 14.2, 2821))
+			elseif selloctn == "Around The City Race" then
+				Tpchar(CFrame.new(-2554, 14.2, 3588))
+			elseif selloctn == "Circuit Race" then
+				Tpchar(CFrame.new(-5546, 15, -4358))
+			elseif selloctn == "City 1/4 Mile" then
+				Tpchar(CFrame.new(-1361, 14.2, 4657))
+			elseif selloctn == "Drag Race" then
+				Tpchar(CFrame.new(-3813, 12.6, 6886))
+			elseif selloctn == "Highway Race" then
+				Tpchar(CFrame.new(-52, 35, -119))
+			elseif selloctn == "Mountain Dash" then
+				Tpchar(CFrame.new(4388, 365.7, -2782))
+			end
+		end,
+		{
+			animated = true
+		}
+	
+	)
+
+
+
 end
 
 local function blumbertyfoon()
@@ -937,10 +1007,6 @@ local function treelandslol()
 		}
 	)
 
-	function frutTp(cframe)
-		char.HumanoidRootPart.CFrame = cframe
-	end
-
 	tpdrop = sect7:Create("Dropdown", "Teleports",
 		function(v)
 			selfrut = v
@@ -975,39 +1041,39 @@ local function treelandslol()
 	local tpthingtp = sect7:Create("Button", "Tp to selected location",
 		function()
 			if selfrut == "Main Shack" then
-				frutTp(CFrame.new(320, 927, 179))
+				Tpchar(CFrame.new(320, 927, 179))
 			elseif selfrut == "Apple Trees" then
-				frutTp(CFrame.new(219, 927, 108))
+				Tpchar(CFrame.new())
 			elseif selfrut == "Blue Berry Bushes" then
-				frutTp(CFrame.new(1028, 971, 402))
+				Tpchar(CFrame.new(1028, 971, 402))
 			elseif selfrut == "Banana Trees" then
-				frutTp(CFrame.new(2019, 1035, 273))
+				Tpchar(CFrame.new(2019, 1035, 273))
 			elseif selfrut == "Big Banana Trees" then
-				frutTp(CFrame.new(2028, 1085, 250))
+				Tpchar(CFrame.new(2028, 1085, 250))
 			elseif selfrut == "Black Berry Bushes" then
-				frutTp(CFrame.new(360, 992, 1292))
+				Tpchar(CFrame.new(360, 992, 1292))
 			elseif selfrut == "Orange Trees" then
-				frutTp(CFrame.new(47, 1030, 1500))
+				Tpchar(CFrame.new(47, 1030, 1500))
 			elseif selfrut == "PoTAtO" then
-				frutTp(CFrame.new(-52, 1030, 1467))
+				Tpchar(CFrame.new(-52, 1030, 1467))
 			elseif selfrut == "Peach Trees ;)" then
-				frutTp(CFrame.new(-968, 944, 160))
+				Tpchar(CFrame.new(-968, 944, 160))
 			elseif selfrut == "Orange Crystal Cave" then
-				frutTp(CFrame.new(1198, 1043, -1249))
+				Tpchar(CFrame.new(1198, 1043, -1249))
 			elseif selfrut == "Crystal Cave" then
-				frutTp(CFrame.new(1163, 972, -874))
+				Tpchar(CFrame.new(1163, 972, -874))
 			elseif selfrut == "Memorial Tree" then
-				frutTp(CFrame.new(1025, 1454, -865))
+				Tpchar(CFrame.new(1025, 1454, -865))
 			elseif selfrut == "Plum Trees" then
-				frutTp(CFrame.new(1000, 1413, -755))
+				Tpchar(CFrame.new(1000, 1413, -755))
 			elseif selfrut == "Durian tree" then
-				frutTp(CFrame.new(1802, 1089, 1015))
+				Tpchar(CFrame.new(1802, 1089, 1015))
 			elseif selfrut == "Watermelon Bushes" then
-				frutTp(CFrame.new(1398, 983, 1132))
+				Tpchar(CFrame.new(1398, 983, 1132))
 			elseif selfrut == "Kiwi Trees" then
-				frutTp(CFrame.new(580, 946, 44))
+				Tpchar(CFrame.new(580, 946, 44))
 			elseif selfrut == "Mango Tree" then
-				frutTp(CFrame.new(1466, 1000, -209))
+				Tpchar(CFrame.new(1466, 1000, -209))
 			elseif selfrut == "Tree House" then
 				for i, v in pairs(game:GetService("Workspace").MainTrees:GetChildren()) do
 					if v.Name == plr.Name then
