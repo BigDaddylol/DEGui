@@ -1,5 +1,5 @@
 if _G.enteredkeycorrectly ~= true then
-	game.Players.LocalPlayer:Kick("Yikes. You just tried to bypass my skey system. :Flushed:")
+	game.Players.LocalPlayer:Kick("Yikes. You just tried to bypass my key system. 😳")
 end
 
 local guiTitle = "Pure Hub"
