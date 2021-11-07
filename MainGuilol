@@ -1,6 +1,5 @@
 if _G.enteredkeycorrectly ~= true then
 	game.Players.LocalPlayer:Kick("Yikes. You just tried to bypass my key system. 😳")
-	print("Roblox takes sooooooo long to update!!111!!!111!!")
 end
 
 local guiTitle = "Pure Hub"
@@ -46,7 +45,7 @@ function Tpchar(cframe)
 end
 
 -- Credits
-local cred0 = sect1:Create("Textlabel", "Script Version: 2.0.0")
+local cred0 = sect1:Create("Textlabel", "Script Version: 2.0.1")
 local cred1 = sect1:Create("Textlabel", "Scripts by: Ham#1591")
 local cred2 = sect1:Create("Textlabel", "Some help with scripting: CynMod#7113")
 local cred3 = sect1:Create("Textlabel", "Gui by: Ham#1591")
@@ -345,7 +344,7 @@ local efctDrpdwn = sect3:Create("Dropdown", "Dropdown",
 local gvsltEfct = sect3:Create("Button", "Give Selected Effect",
 	function()
 		local selEffect = Instance.new(effect)
-		selEffect.Parent = char.Torso
+		selEffect.Parent = char.Head
 	end,
 	{
 		animated = true
@@ -354,8 +353,8 @@ local gvsltEfct = sect3:Create("Button", "Give Selected Effect",
 
 local rmvEft = sect3:Create("Button", "Remove Selected Effect",
 	function()
-		if char.Torso:FindFirstChild(effect) then
-			char.Torso[effect]:Destroy()
+		if char.Head:FindFirstChild(effect) then
+			char.Head[effect]:Destroy()
 		end
 	end,
 	{
@@ -511,10 +510,36 @@ local noclipToggler = sect3:Create("Keybind", "Noclip Toggle", -- The name of th
                 if char:FindFirstChild'Torso' and char:FindFirstChild'Head' then
                     char:FindFirstChild'Torso'.CanCollide = false
                     char:FindFirstChild'Head'.CanCollide = false
+				else
+					for _,v in pairs(char:children()) do 
+						pcall(function() 
+							if v.ClassName == "MeshPart" then 
+								v.CanCollide = false 
+							elseif v.ClassName == "Part" then
+								v.CanCollide = false
+							end 
+						end) 
+					end 
                 end
             end)
         else
             pcall(function() rStep:Disconnect() end)
+
+			if char:FindFirstChild'Torso' and char:FindFirstChild'Head' then
+				char:FindFirstChild'Torso'.CanCollide = true
+				char:FindFirstChild'Head'.CanCollide = true
+			else
+				for _,v in pairs(char:children()) do 
+					pcall(function() 
+						if v.ClassName == "MeshPart" then 
+							v.CanCollide = true 
+						elseif v.ClassName == "Part" then
+							v.CanCollide = true
+						end 
+					end) 
+				end 
+			end
+
         end
     end,
     {
@@ -655,29 +680,22 @@ local function drivinEmpir()
 					pumpstate = true
 					repeat
 						local pumpStor = game:GetService("Workspace").Game.Halloween.Pumpkins
-						
 						if pumpStor:FindFirstChild("_p") then
 								v = pumpStor["_p"]
-
 								if v.Position.Y > 0 then
-									v.CanCollide = false
 									v.CanCollide = true
-									v.Face.CanCollide = false
-									v.Face.CanCollide = true
-									v.Stem.CanCollide = false
-									v.Stem.CanCollide = true
 									if bruh == 1 then
-										char.HumanoidRootPart.CFrame = v.Face.CFrame + Vector3.new(0, 10, 0)
+										char.HumanoidRootPart.CFrame = v.CFrame 
 										bruh = 0
 									elseif bruh == 0 then
-										char.HumanoidRootPart.CFrame = v.Face.CFrame + Vector3.new(0, 15, 0)
+										char.HumanoidRootPart.CFrame = v.CFrame + Vector3.new(0, 15, 0)
 										bruh = 1
 									end
 								end
 							else
 								print("No more pumpkins detected in workspace.")
 						end
-						wait(1)
+						wait(4)
 					until pumpstate == false
 				elseif pumpstate == true then
 					pumpstate = false
