@@ -1,4 +1,4 @@
-if _G.enteredkeycorrectly ~= "thatkindabadsigh" then
+if _G.enteredkeycorrectly ~= true then
 	game.Players.LocalPlayer:Kick("Yikes. You just tried to bypass my skey system. :Flushed:")
 end
 
