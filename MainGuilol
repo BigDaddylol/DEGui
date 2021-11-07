@@ -1,3 +1,7 @@
+if _G.enteredkeycorrectly ~= "thatkindabadsigh" then
+	game.Players.LocalPlayer:Kick("Yikes. You just tried to bypass my skey system. :Flushed:")
+end
+
 local guiTitle = "Pure Hub"
 
 if game.CoreGui:FindFirstChild(guiTitle) then
@@ -41,6 +45,7 @@ function Tpchar(cframe)
 end
 
 -- Credits
+local cred0 = sect1:Create("Textlabel", "Script Version: 2.0.0")
 local cred1 = sect1:Create("Textlabel", "Scripts by: Ham#1591")
 local cred2 = sect1:Create("Textlabel", "Some help with scripting: CynMod#7113")
 local cred3 = sect1:Create("Textlabel", "Gui by: Ham#1591")
