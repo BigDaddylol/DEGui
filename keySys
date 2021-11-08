@@ -1,0 +1,70 @@
+_G.enteredkeycorrectly = nil
+local guiTitle = "Pure Hub Key"
+key = nil
+textythingy = "Key Goes Here"
+
+if game.CoreGui:FindFirstChild(guiTitle) then
+	game.CoreGui[guiTitle]:Destroy()
+end
+
+--Universal locals
+local localPlayer = game:GetService("Players").LocalPlayer
+local char = localPlayer.Character
+
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bloodball/UI-Librarys/main/Zypher%20(HOT!)"))()
+
+local Main = library:CreateMain({
+	-- Required
+	projName = guiTitle, -- The name for the UI in game.CoreGui, not the GUI itself.
+	-- Optional
+	Resizable = true, -- Requires MinSize and MaxSize
+	MinSize = UDim2.new(0, 750, 0, 400),
+	MaxSize = UDim2.new(0, 750, 0, 459)
+})
+
+game.CoreGui[guiTitle].Motherframe.Size = UDim2.new(0, 750, 0, 459)
+
+-- Categories
+
+local categ1 = Main:CreateCategory("Pure Hub")
+
+-- Sections
+
+local sectunolol = categ1:CreateSection("Key")
+
+-- Interactibles
+
+local keyinserter = sectunolol:Create("Textbox", "Enter key here",
+    function(keylol)
+        key = keylol
+    end,
+    {
+        text = textythingy
+    }
+)
+
+local keychecka = sectunolol:Create("Button", "Check Key",
+    function()
+        if key == "nglthisnewkeykindathicc" then
+            _G.enteredkeycorrectly = true
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/BigDaddylol/DEGui/main/MainGuilol"))()
+            game.CoreGui["Pure Hub Key"]:Destroy()
+        else 
+            textythingy = "Incorrect Key"
+        end
+    end,
+    {
+        animated = true
+    }
+
+)
+
+local guide = sectunolol:Create("Textlabel", "Join the discord server (below) for the key.")
+local guidept2 = sectunolol:Create("Button", "https://discord.gg/rNjmYBDJ93",
+	function()
+		setclipboard("https://discord.gg/rNjmYBDJ93") --This function woks on krnl.
+	end,
+	{
+		animated = true
+	}
+)
