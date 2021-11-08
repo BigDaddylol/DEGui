@@ -1,7 +1,5 @@
 -- Pure dev build.
 
-_G.enteredkeycorrectly ~= true
-
 if _G.enteredkeycorrectly ~= true then
 	game.Players.LocalPlayer:Kick("Yikes. You just tried to bypass my key system. 😳")
 end
