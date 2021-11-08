@@ -45,7 +45,7 @@ function Tpchar(cframe)
 end
 
 -- Credits
-local cred0 = sect1:Create("Textlabel", "Script Version: 2.0.1")
+local cred0 = sect1:Create("Textlabel", "Script Version: 2.0.2")
 local cred1 = sect1:Create("Textlabel", "Scripts by: Ham#1591")
 local cred2 = sect1:Create("Textlabel", "Some help with scripting: CynMod#7113")
 local cred3 = sect1:Create("Textlabel", "Gui by: Ham#1591")
@@ -78,6 +78,8 @@ local settin1 = sect2:Create("Keybind", "Gui Toggle", -- The name of the keybind
 local settin2 = sect2:Create("Button", "Close Gui",
 	function()
 		game.CoreGui[guiTitle]:Destroy()
+
+		onRenderStep:Disconnect()
 	end,
 	{
 		animated = true
@@ -166,14 +168,7 @@ local jpSlid = sect3:Create("Slider", "Jump Power",
 	}
 )
 
-function onRenderStep()
-	if sprinting == false then
-		char.Humanoid.WalkSpeed = walklol
-	elseif sprinting == true then
-		char.Humanoid.WalkSpeed = sprintSpeed
-	end
-	char.Humanoid.JumpPower = jumplol
-end
+local pumpkins = 0
 
 flySpeed = 10
 
@@ -189,10 +184,6 @@ flyslida = sect3:Create("Slider", "Fly Speed",
 		changeablevalue = false
 	}
 )
-
-
-
-game:GetService("RunService").RenderStepped:Connect(onRenderStep)
 
 if game.Players.LocalPlayer.Character.Humanoid.RigType == Enum.HumanoidRigType.R6 then
     deflol = 0
@@ -321,14 +312,33 @@ local unmedEspBtn = sect3:Create("Button", "Unnamed Esp",
 	}
 )
 
-local aimbotIG = sect3:Create("Button", "Aimbot (Right click)",
+local aimbotIG = sect3:Create("Button", "Load Aimbot",
 	function()
 		loadstring(game:HttpGet("https://raw.githubusercontent.com/LancereReal/PureStorage/main/Aimbot"))()
+		aimbotting = true
 	end,
 	{
 		animated = true
 	}
 )
+
+local aimbottoggler = sect3:Create("Keybind", "Aimbot toggle",
+	function()
+		if aimb == true then
+			aimb = false
+			MB2Held = false
+        	MouseTests()
+		elseif aimb == false then
+			aimb = true
+			MB2Held = true
+        	MouseTests()
+		end
+	end,
+	{
+		default = Enum.KeyCode.L
+	}
+)
+
 
 local efctDrpdwn = sect3:Create("Dropdown", "Dropdown",
 	function(v)
@@ -594,7 +604,6 @@ local function drivinEmpir()
 			local Players = game:GetService("Players")
 			local RunService = game:GetService("RunService")
 			local UserInputService = game:GetService("UserInputService")
-			local TweenService = game:GetService("TweenService")
 
 			local LocalPlayer = Players.LocalPlayer
 			local Character = LocalPlayer.Character
@@ -705,6 +714,8 @@ local function drivinEmpir()
 			default = false
 		}
 	)
+
+	pmpCntr = sect5:Create("Textlabel", "There are currently still processing pumpkins.")
 
 	tpdrop = sect5:Create("Dropdown", "Teleports",
 		function(v)
@@ -1181,3 +1192,23 @@ elseif game.PlaceId == 3351674303 then
 elseif game.PlaceId == 17541179 then
 	extrememinors()
 end
+
+-- Renderstepped Function
+
+
+
+function onRenderStep()
+	if sprinting == false then
+		char.Humanoid.WalkSpeed = walklol
+	elseif sprinting == true then
+		char.Humanoid.WalkSpeed = sprintSpeed
+	end
+	char.Humanoid.JumpPower = jumplol
+	if game.PlaceId == 3351674303 then
+		local children = game:GetService("Workspace").Game.Halloween.Pumpkins:GetChildren()
+		local pumpkins = #children
+		pmpCntr:SetText("There are currently "..tostring(pumpkins).." pumpkins.")
+	end
+end
+
+game:GetService("RunService").RenderStepped:Connect(onRenderStep)
