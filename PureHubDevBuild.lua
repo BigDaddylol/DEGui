@@ -1,5 +1,3 @@
--- Pure dev build.
-
 if _G.enteredkeycorrectly ~= true then
 	game.Players.LocalPlayer:Kick("Yikes. You just tried to bypass my key system. 😳")
 end
@@ -695,11 +693,13 @@ local function drivinEmpir()
 						if v.Position.Y > 0 then
 							v.CanCollide = true
 							char.HumanoidRootPart.CFrame = v.CFrame + Vector3.new(0, 15, 0)
+							print("Tped to pumpkin")
 						end
 					else
 						print("No more pumpkins detected in workspace.")
 					end
 					wait(4)
+					print("Repeating")
 				until pumpstate == false
 			end
 		end,
