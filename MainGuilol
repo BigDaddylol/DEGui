@@ -45,7 +45,7 @@ function Tpchar(cframe)
 end
 
 -- Credits
-local cred0 = sect1:Create("Textlabel", "Script Version: 2.0.2")
+local cred0 = sect1:Create("Textlabel", "Script Version: 2.0.3")
 local cred1 = sect1:Create("Textlabel", "Scripts by: Ham#1591")
 local cred2 = sect1:Create("Textlabel", "Some help with scripting: CynMod#7113")
 local cred3 = sect1:Create("Textlabel", "Gui by: Ham#1591")
@@ -78,8 +78,6 @@ local settin1 = sect2:Create("Keybind", "Gui Toggle", -- The name of the keybind
 local settin2 = sect2:Create("Button", "Close Gui",
 	function()
 		game.CoreGui[guiTitle]:Destroy()
-
-		onRenderStep:Disconnect()
 	end,
 	{
 		animated = true
@@ -168,7 +166,14 @@ local jpSlid = sect3:Create("Slider", "Jump Power",
 	}
 )
 
-local pumpkins = 0
+function onRenderStep()
+	if sprinting == false then
+		char.Humanoid.WalkSpeed = walklol
+	elseif sprinting == true then
+		char.Humanoid.WalkSpeed = sprintSpeed
+	end
+	char.Humanoid.JumpPower = jumplol
+end
 
 flySpeed = 10
 
@@ -184,6 +189,10 @@ flyslida = sect3:Create("Slider", "Fly Speed",
 		changeablevalue = false
 	}
 )
+
+
+
+game:GetService("RunService").RenderStepped:Connect(onRenderStep)
 
 if game.Players.LocalPlayer.Character.Humanoid.RigType == Enum.HumanoidRigType.R6 then
     deflol = 0
@@ -312,33 +321,14 @@ local unmedEspBtn = sect3:Create("Button", "Unnamed Esp",
 	}
 )
 
-local aimbotIG = sect3:Create("Button", "Load Aimbot",
+local aimbotIG = sect3:Create("Button", "Aimbot (Right click)",
 	function()
 		loadstring(game:HttpGet("https://raw.githubusercontent.com/LancereReal/PureStorage/main/Aimbot"))()
-		aimbotting = true
 	end,
 	{
 		animated = true
 	}
 )
-
-local aimbottoggler = sect3:Create("Keybind", "Aimbot toggle",
-	function()
-		if aimb == true then
-			aimb = false
-			MB2Held = false
-        	MouseTests()
-		elseif aimb == false then
-			aimb = true
-			MB2Held = true
-        	MouseTests()
-		end
-	end,
-	{
-		default = Enum.KeyCode.L
-	}
-)
-
 
 local efctDrpdwn = sect3:Create("Dropdown", "Dropdown",
 	function(v)
@@ -422,6 +412,8 @@ local threeDottoggle = sect3:Create("Toggle", "Three Dots At Tope Right Visible"
 	}
 )
 
+
+if game.PlaceId ~= "2990100290" then
 repeat wait() 
 until localPlayer and char and char:FindFirstChild("Head") and char:FindFirstChild("Humanoid") 
 local mouse = localPlayer:GetMouse() 
@@ -510,6 +502,7 @@ local flyToggle = sect3:Create("Keybind", "Fly Toggle", -- The name of the keybi
 		default = Enum.KeyCode.F
 	}
 )
+end
 
 local noClipState = false
 local noclipToggler = sect3:Create("Keybind", "Noclip Toggle", -- The name of the keybind
@@ -520,36 +513,10 @@ local noclipToggler = sect3:Create("Keybind", "Noclip Toggle", -- The name of th
                 if char:FindFirstChild'Torso' and char:FindFirstChild'Head' then
                     char:FindFirstChild'Torso'.CanCollide = false
                     char:FindFirstChild'Head'.CanCollide = false
-				else
-					for _,v in pairs(char:children()) do 
-						pcall(function() 
-							if v.ClassName == "MeshPart" then 
-								v.CanCollide = false 
-							elseif v.ClassName == "Part" then
-								v.CanCollide = false
-							end 
-						end) 
-					end 
                 end
             end)
         else
             pcall(function() rStep:Disconnect() end)
-
-			if char:FindFirstChild'Torso' and char:FindFirstChild'Head' then
-				char:FindFirstChild'Torso'.CanCollide = true
-				char:FindFirstChild'Head'.CanCollide = true
-			else
-				for _,v in pairs(char:children()) do 
-					pcall(function() 
-						if v.ClassName == "MeshPart" then 
-							v.CanCollide = true 
-						elseif v.ClassName == "Part" then
-							v.CanCollide = true
-						end 
-					end) 
-				end 
-			end
-
         end
     end,
     {
@@ -599,11 +566,12 @@ local lightSlide2 = sect3:Create("Slider", "Light Range",
 local function drivinEmpir()
 	local categ4 = Main:CreateCategory("Driving Empire")
 	local sect5 = categ4:CreateSection("Main Hacks")
-	local drvnemprautofarm = sect5:Create("Button", "AutoFarm",
+	local drvnemprautofarm = sect5:Create("Button", "AutoFarm V2",
 		function()
 			local Players = game:GetService("Players")
 			local RunService = game:GetService("RunService")
 			local UserInputService = game:GetService("UserInputService")
+			local TweenService = game:GetService("TweenService")
 
 			local LocalPlayer = Players.LocalPlayer
 			local Character = LocalPlayer.Character
@@ -653,18 +621,16 @@ local function drivinEmpir()
 					return
 				end
 				local Speed = ((10/12) * (60/88)) * SeatPart.Velocity.Magnitude
-				if SeatPart.Position.X > -14294.7607 then
+				if SeatPart.Position.X < -7956.56 or SeatPart.Position.X > -1557 then
 					Character.Parent = Vehicle
-					Vehicle:MoveTo(Vector3.new(-17157.2793, 83.1872673, 2641.22705))
+					Vehicle:MoveTo(Vector3.new(-1557.57, 69.9041, 486.571))
 					Character.Parent = workspace
 				end
 				if Speed < 550 then 
 					local WV = GetWheelVelocity()
-					SetWheelVelocity(Vector3.new(deautofrmspeed, WV["Y"], deautofrmspeed / -50.1940043308)) 
+					SetWheelVelocity(Vector3.new(-deautofrmspeed, WV["Y"], -deautofrmspeed / -5)) 
 				end
 			end)
-
-
 		end,
 		{
 			animated = true
@@ -673,7 +639,7 @@ local function drivinEmpir()
 	deautofrmspeed = 350
 	local deautospeed = sect5:Create("TextBox", "AutoFarm Speed",
 		function(desped)
-			deautofrmspeed = desped * 2
+			deautofrmspeed = desped / 2 * 3
 		end,
 		{
 			text = "350"
@@ -683,6 +649,7 @@ local function drivinEmpir()
 	pumpstate = false
 	bruh = 1
 
+	--[[ -- Deprecated pumpkin autofarm circa 11/06/21
 	local pumpkinAuto = sect5:Create("Toggle", "Pumpkin AutoFarm",
 			function()
 				if pumpstate == false then
@@ -693,6 +660,8 @@ local function drivinEmpir()
 								v = pumpStor["_p"]
 								if v.Position.Y > 0 then
 									v.CanCollide = true
+									v.Face.CanCollide = true
+									v.Stem.CanCollide = true
 									if bruh == 1 then
 										char.HumanoidRootPart.CFrame = v.CFrame 
 										bruh = 0
@@ -704,7 +673,7 @@ local function drivinEmpir()
 							else
 								print("No more pumpkins detected in workspace.")
 						end
-						wait(4)
+						wait(1)
 					until pumpstate == false
 				elseif pumpstate == true then
 					pumpstate = false
@@ -715,7 +684,7 @@ local function drivinEmpir()
 		}
 	)
 
-	pmpCntr = sect5:Create("Textlabel", "There are currently still processing pumpkins.")
+	--]]
 
 	tpdrop = sect5:Create("Dropdown", "Teleports",
 		function(v)
@@ -723,16 +692,14 @@ local function drivinEmpir()
 		end,
 		{
 			options = {
+				"Autofarm Point",
 				"Cars & Mortorcycles Dealer",
-				"City Dealer",
 				"Boat Dealer",
 				"Helocopter & Plane Dealer",
-				"Around The City Race",
+				"Paradise Tuning",
 				"Circuit Race",
-				"City 1/4 Mile",
 				"Drag Race",
-				"Highway Race",
-				"Mountain Dash"
+				"Highway Race"
 			},
 
 			default = "Cars & Mortorcycles Dealer",
@@ -742,26 +709,22 @@ local function drivinEmpir()
 
 	local tpthingtp = sect5:Create("Button", "Tp to selected location",
 		function()
-			if selloctn == "Cars & Mortorcycles Dealer" then
-				Tpchar(CFrame.new(-246.507, 26, -961.918))
-			elseif selloctn == "City Dealer" then
-				Tpchar(CFrame.new(-1736, 14.2, 2515))
+			if selloctn == "Autofarm Point" then
+				Tpchar(CFrame.new(-1366, 67.369, 470))
+			elseif selloctn == "Cars & Mortorcycles Dealer" then
+				Tpchar(CFrame.new(-303, 16.4581, -1575))
 			elseif selloctn == "Boat Dealer" then
-				Tpchar(CFrame.new(-1471.5, 14.2, 2312))
+				Tpchar(CFrame.new(-1874, 14.7955, 4865))
 			elseif selloctn == "Helocopter & Plane Dealer" then
-				Tpchar(CFrame.new(165, 14.2, 2821))
-			elseif selloctn == "Around The City Race" then
-				Tpchar(CFrame.new(-2554, 14.2, 3588))
+				Tpchar(CFrame.new(376, 14.7849, 3034))
 			elseif selloctn == "Circuit Race" then
-				Tpchar(CFrame.new(-5546, 15, -4358))
-			elseif selloctn == "City 1/4 Mile" then
-				Tpchar(CFrame.new(-1361, 14.2, 4657))
+				Tpchar(CFrame.new(-5651, 14.7413, -4508))
 			elseif selloctn == "Drag Race" then
-				Tpchar(CFrame.new(-3813, 12.6, 6886))
+				Tpchar(CFrame.new(-799, 25.6791, 244))
 			elseif selloctn == "Highway Race" then
-				Tpchar(CFrame.new(-52, 35, -119))
-			elseif selloctn == "Mountain Dash" then
-				Tpchar(CFrame.new(4388, 365.7, -2782))
+				Tpchar(CFrame.new(-148, 25.6407, -192))
+			elseif selloctn == "Paradise Tuning" then
+				Tpchar(CFrame.new(264, 25.5824, -624))
 			end
 		end,
 		{
@@ -1143,6 +1106,13 @@ local function extrememinors()
 	)
 end
 
+local function rpgSim()
+	local categ8 = Main:CreateCategory("Rpg Sim.")
+	local sect9 = categ8:CreateSection("Main Hacks")
+
+
+end
+
 --Game Loader Section
 
 local gameoneloader = sect4:Create("Button", "Load Driving Empire",
@@ -1181,6 +1151,15 @@ local gamefourloader = sect4:Create("Button", "Load Mega Miners",
 	}
 )
 
+local gamefiveloader = sect4:Create("Button", "Load RPG Simulator",
+	function()
+		rpgSim()
+	end,
+	{
+		animated = true
+	}
+)
+
 --Load hacks if game is supported
 
 if game.PlaceId == 404729070 then
@@ -1191,24 +1170,6 @@ elseif game.PlaceId == 3351674303 then
 	drivinEmpir()
 elseif game.PlaceId == 17541179 then
 	extrememinors()
+elseif game.PlaceId == 2990100290 then
+	rpgSim()
 end
-
--- Renderstepped Function
-
-
-
-function onRenderStep()
-	if sprinting == false then
-		char.Humanoid.WalkSpeed = walklol
-	elseif sprinting == true then
-		char.Humanoid.WalkSpeed = sprintSpeed
-	end
-	char.Humanoid.JumpPower = jumplol
-	if game.PlaceId == 3351674303 then
-		local children = game:GetService("Workspace").Game.Halloween.Pumpkins:GetChildren()
-		local pumpkins = #children
-		pmpCntr:SetText("There are currently "..tostring(pumpkins).." pumpkins.")
-	end
-end
-
-game:GetService("RunService").RenderStepped:Connect(onRenderStep)
