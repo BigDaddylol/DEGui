@@ -3,6 +3,13 @@ local guiTitle = "Pure Hub Key"
 key = nil
 textythingy = "Key Goes Here"
 
+
+
+actualkeylol = "W8KmIZsO9cH68djKmTJF"
+
+
+
+
 if game.CoreGui:FindFirstChild(guiTitle) then
 	game.CoreGui[guiTitle]:Destroy()
 end
@@ -45,7 +52,7 @@ local keyinserter = sectunolol:Create("Textbox", "Enter key here",
 
 local keychecka = sectunolol:Create("Button", "Check Key",
     function()
-        if key == "nglthisnewkeykindathicc" then
+        if key == actualkeylol then
             _G.enteredkeycorrectly = true
             loadstring(game:HttpGet("https://raw.githubusercontent.com/BigDaddylol/DEGui/main/MainGuilol"))()
             game.CoreGui["Pure Hub Key"]:Destroy()
