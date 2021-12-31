@@ -1,96 +1,1539 @@
-import DiscordJS, { Intents } from 'discord.js'
-import dotenv from 'dotenv'
-dotenv.config()
+if _G.enteredkeycorrectly ~= true then
+	game.Players.LocalPlayer:Kick("Yikes. You just tried to bypass my key system. 😳")
+end
 
-const scriptkey = "8ZNqkL7k7TnQLBgt9EnR"
+local guiTitle = "Pure Hub"
 
-const client = new DiscordJS.Client({
-    intents: [
-      Intents.FLAGS.GUILDS,
-      Intents.FLAGS.GUILD_MESSAGES,
-      Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
-    ],
-  })
+if game.CoreGui:FindFirstChild(guiTitle) then
+	game.CoreGui[guiTitle]:Destroy()
+end
 
-client.on('ready', () => {
-  console.log('The bot is ready!')
+--Universal locals
+local localPlayer = game:GetService("Players").LocalPlayer
+local char = localPlayer.Character
 
-  const guildId = '895077048442298408' // Use your guild ID instead
-  const guild = client.guilds.cache.get(guildId)
-  let commands
-  if (guild) {
-    commands = guild.commands
-  } else {
-    commands = client.application?.commands
-  }
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bloodball/UI-Librarys/main/Zypher%20(HOT!)"))()
 
-  commands?.create({
-    name: 'key',
-    description: 'Obtain the key for Pure Hub',
-  })
-
-  commands?.create({
-    name: 'script',
-    description: 'If you use this, you are retarded.',
-  })
-
-  commands?.create({
-    name: 'bruh',
-    description: 'bruh',
-  })
+local Main = library:CreateMain({
+	-- Required
+	projName = guiTitle, -- The name for the UI in game.CoreGui, not the GUI itself.
+	-- Optional
+	Resizable = true, -- Requires MinSize and MaxSize
+	MinSize = UDim2.new(0, 750, 0, 400),
+	MaxSize = UDim2.new(0, 750, 0, 459)
 })
 
-client.on('interactionCreate', async (interaction) => {
-  if (!interaction.isCommand()) {
-    return
-  }
-  const { commandName, options } = interaction
-  
-  const exampleEmbed = {
-    type: "rich",
-    title: 'Key -',
-    description: '``` ' + scriptkey + ' ```',
-    color: 0xed0000,
-      fields: [
-        {
-          name: `Please acknowledge -`,
-          value: `DON'T COPY THE SPACES! If you are suspected of sharing this key with anyone, you will be permanently banned from the discord server.\n\nIf you are also suspected of trying to bypass the key system, you will be permanently banned as well.`,
-          inline: true
-        }
-      ]
-  };
+game.CoreGui[guiTitle].Motherframe.Size = UDim2.new(0, 750, 0, 459)
 
-  const retardEmbed = {
-    type: "rich",
-    title: 'You are very dumb.',
-    description: 'Like how could you be this dumb.',
-    color: 0xed0000,
-      fields: [
-        {
-          name: `Come on. You are so retarded. Can you even read?`,
-          value: `I am getting so sick and tired of retards like you doing this. Literally read. That's all you have to do. If you would have read, you would have seen the channel <#895124430202740816> where guess what? The script is in.`,
-          inline: true
-        }
-      ]
-  };
+-- Categories
 
-  if (commandName === 'key') {
-    interaction.reply({
-      embeds: [exampleEmbed],
-      ephemeral: true,
-    })
-  }
+local categ1 = Main:CreateCategory(guiTitle)
+local categ2 = Main:CreateCategory("General Scripts")
+local categ3 = Main:CreateCategory("Game loader")
 
-  if (commandName === 'script') {
-    interaction.reply({
-      embeds: [retardEmbed],
-      ephemeral: false,
-    })
-  }
+-- Sections
 
-  if (commandName === 'bruh') {
-    interaction.reply('bruh')
-  }
-})
+local sect1 = categ1:CreateSection("Credits")
+local sect2 = categ1:CreateSection("Settings")
+local sect3 = categ2:CreateSection("Player Scripts")
+local sect4 = categ3:CreateSection("Game Hacks Loader")
 
-client.login(process.env.TOKEN)
+-- Functions
+
+function Tpchar(cframe)
+	char.HumanoidRootPart.CFrame = cframe
+end
+
+-- Credits
+local cred0 = sect1:Create("Textlabel", "Script Version: 2.0.4")
+local cred1 = sect1:Create("Textlabel", "Scripts by: Ham#1591")
+local cred2 = sect1:Create("Textlabel", "Some help with scripting: CynMod#7113")
+local cred3 = sect1:Create("Textlabel", "Gui by: Ham#1591")
+local cred4 = sect1:Create("Textlabel", "Ui Library by: xTheAlex#3200")
+-- local cred6 = sect1:Create("Textlabel", "Script Security: One Shot#0001")
+local cred5 = sect1:Create("Button", "https://discord.gg/rNjmYBDJ93",
+	function()
+		setclipboard("https://discord.gg/rNjmYBDJ93") --This function woks on krnl.
+	end,
+	{
+		animated = true
+	}
+)
+
+game:GetService("CoreGui")["Pure Hub"].Motherframe.Categories["Pure HubCategory"].CreditsSection["https://discord.gg/rNjmYBDJ93Button"].ImageButton.TextLabel.TextXAlignment = "Left"
+game:GetService("CoreGui")["Pure Hub"].Motherframe.Categories["Pure HubCategory"].CreditsSection["https://discord.gg/rNjmYBDJ93Button"].ImageButton.TextLabel.Position = UDim2.new(0.01,0,0,0)
+-- Settings
+local settin1 = sect2:Create("Keybind", "Gui Toggle", -- The name of the keybind
+	function()
+		if game:GetService("CoreGui")[guiTitle].Enabled == true then
+			game:GetService("CoreGui")[guiTitle].Enabled = false
+		elseif game:GetService("CoreGui")[guiTitle].Enabled == false then
+			game:GetService("CoreGui")[guiTitle].Enabled = true
+		end
+	end,
+	{
+		default = Enum.KeyCode.RightControl
+	}
+)
+
+local settin2 = sect2:Create("Button", "Close Gui",
+	function()
+		game.CoreGui[guiTitle]:Destroy()
+	end,
+	{
+		animated = true
+	}
+)
+
+local settin3 = sect2:Create("Button", "Rejoin Server",
+	function()
+		local ts = game:GetService("TeleportService")
+		ts:Teleport(game.PlaceId, localPlayer)
+	end,
+	{
+		animated = true
+	}
+)
+
+-- General Hacks
+local wsSlid = sect3:Create("Slider", "Walk Speed",
+	function(ws)
+		walklol = ws
+	end,
+	{
+		min = 16,
+		max = 500,
+		default = 16,
+		precise = false,
+		changeablevalue = false
+	}
+)
+
+local sprntSpeed = sect3:Create("Slider", "Sprint Speed",
+	function(ss)
+		sprintSpeed = ss
+	end,
+	{
+		min = 16,
+		max = 1000,
+		default = 50,
+		precise = false,
+		changeablevalue = false
+	}
+)
+
+local sprinting = false
+
+local sprintToggler = sect3:Create("Keybind", "Sprint", -- The name of the keybind
+	function(sprintkey)
+		sprintKeybind = sprintkey
+	end,
+	{
+		default = Enum.KeyCode.LeftShift
+	}
+)
+
+local function onInputBegan(input, gameProcessed)
+	if input.UserInputType == Enum.UserInputType.Keyboard then
+		if input.KeyCode == sprintKeybind then 
+			sprinting = true
+			char.Humanoid.WalkSpeed = sprintSpeed
+		end
+	end
+end
+
+local function onInputEnded(input, gameProcessed)
+	if input.UserInputType == Enum.UserInputType.Keyboard then
+		if input.KeyCode == sprintKeybind then --Hotkey
+			sprinting = false
+			char.Humanoid.WalkSpeed = walklol
+		end
+	end
+end
+
+game:GetService('UserInputService').InputBegan:Connect(onInputBegan)
+game:GetService("UserInputService").InputEnded:Connect(onInputEnded)
+
+local jpSlid = sect3:Create("Slider", "Jump Power",
+	function(js)
+		jumplol = js
+	end,
+	{
+		min = 50,
+		max = 1000,
+		default = 50,
+		precise = false,
+		changeablevalue = false
+	}
+)
+
+function onRenderStep()
+	if sprinting == false then
+		char.Humanoid.WalkSpeed = walklol
+	elseif sprinting == true then
+		char.Humanoid.WalkSpeed = sprintSpeed
+	end
+	char.Humanoid.JumpPower = jumplol
+end
+
+flySpeed = 10
+
+flyslida = sect3:Create("Slider", "Fly Speed",
+	function(fs)
+		maxspeed = fs
+	end,
+	{
+		min = 10,
+		max = 1000,
+		default = 50,
+		precise = false,
+		changeablevalue = false
+	}
+)
+
+
+
+game:GetService("RunService").RenderStepped:Connect(onRenderStep)
+
+if game.Players.LocalPlayer.Character.Humanoid.RigType == Enum.HumanoidRigType.R6 then
+    deflol = 0
+elseif game.Players.LocalPlayer.Character.Humanoid.RigType == Enum.HumanoidRigType.R15 then
+    deflol = 2
+end
+
+local hipSlid = sect3:Create("Slider", "Hip Height",
+	function(hh)
+		char.Humanoid.HipHeight = hh
+	end,
+	{
+		min = 0,
+		max = 500,
+		default = deflol,
+		precise = false,
+		changeablevalue = false
+	}
+)
+
+local fovSlid = sect3:Create("Slider", "Fov",
+	function(fov)
+		game.Workspace.Camera.FieldOfView = fov
+	end,
+	{
+		min = 1,
+		max = 120,
+		default = 70,
+		precise = false,
+		changeablevalue = false
+	}
+)
+
+local thebruhDistancelol = localPlayer.CameraMaxZoomDistance
+
+local viewDistanceslid = sect3:Create("Slider", "View Distance",
+	function(vd)
+		viewDistance = vd
+
+		rStep = game:GetService('RunService').Stepped:Connect(function()
+			localPlayer.CameraMaxZoomDistance = viewDistance
+		end)
+	end,
+	{
+		min = 1,
+		max = 10000,
+		default = thebruhDistancelol,
+		precise = false,
+		changeablevalue = false
+	}
+)
+
+local dexBtn = sect3:Create("Button", "Load Dark Dex",
+	function()
+		loadstring(game:HttpGet("https://pastebin.com/raw/1piaHBqj", true))()
+	end,
+	{
+		animated = true
+	}
+)
+
+local undexBtn = sect3:Create("Button", "Unload Dark Dex",
+	function()
+		if game.CoreGui:FindFirstChild("SynapseDex") then
+			game.CoreGui:FindFirstChild("SynapseDex"):Destroy()
+		end
+	end,
+	{
+		animated = true
+	}
+)
+
+local bckPck = sect3:Create("Toggle", "Backpack toggle",
+	function(bc)
+		if bc == true then
+			game.StarterGui:SetCoreGuiEnabled(2, true)
+		elseif bc == false then
+			game.StarterGui:SetCoreGuiEnabled(2, false)
+		end
+	end,
+	{
+		default = true
+	}
+)
+
+local antiAfkBtn = sect3:Create("Toggle", "Anti Afk",
+	function(state)
+		if state == false then
+			local vu = game:GetService("VirtualUser")
+			afkfunction = localPlayer.Idled:connect(function()
+				vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+				wait(1)
+				vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+			end)
+		elseif state == true then
+			afkfunction:Disconnect()
+		end
+	end
+)
+
+local btoolsBtn = sect3:Create("Button", "Give Btools",
+	function()
+		local tool1 = Instance.new("HopperBin",localPlayer.Backpack) --May seem to be an error, but works fine in roblox.
+		local tool2 = Instance.new("HopperBin",localPlayer.Backpack)
+		local tool3 = Instance.new("HopperBin",localPlayer.Backpack)
+		tool1.BinType = "Clone"
+		tool2.BinType = "Hammer"
+		tool3.BinType = "Grab"
+		tool1.Name = "Copy"
+		tool2.Name = "Delete"
+		tool3.Name = "Grab"
+		tool3.TextureId = "http://www.roblox.com/asset/?id=7669518870"
+	end,
+	{
+		animated = true
+	}
+)
+
+
+
+local unmedEspBtn = sect3:Create("Button", "Unnamed Esp",
+	function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/LancereReal/PureStorage/main/UnnamedEsp"))()
+	end,
+	{
+		animated = true
+	}
+)
+
+local aimbotIG = sect3:Create("Button", "Aimbot (Right click)",
+	function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/LancereReal/PureStorage/main/Aimbot"))()
+	end,
+	{
+		animated = true
+	}
+)
+
+local efctDrpdwn = sect3:Create("Dropdown", "Dropdown",
+	function(v)
+		effect = v
+	end,
+	{
+		options = {"Fire", "Sparkles", "Smoke"},
+		default = "Fire",
+		search = true
+	}
+)
+
+local gvsltEfct = sect3:Create("Button", "Give Selected Effect",
+	function()
+		local selEffect = Instance.new(effect)
+		selEffect.Parent = char.Head
+	end,
+	{
+		animated = true
+	}
+)
+
+local rmvEft = sect3:Create("Button", "Remove Selected Effect",
+	function()
+		if char.Head:FindFirstChild(effect) then
+			char.Head[effect]:Destroy()
+		end
+	end,
+	{
+		animated = true
+	}
+)
+
+local suiciCider = sect3:Create("Button", "Suicide",
+	function()
+		if char:FindFirstChild("Torso") then
+			char.Humanoid.Health = 0
+		elseif char:FindFirstChild("HumanoidRootPart") then
+			char.Humanoid.Health = 0
+		end
+	end,
+	{
+		animated = true
+	}
+)
+
+heltMaybe = nil
+
+if game:GetService("CoreGui").ThemeProvider.TopBarFrame.RightFrame.HealthBar.Visible == true then
+	heltMaybe = true
+elseif game:GetService("CoreGui").ThemeProvider.TopBarFrame.RightFrame.HealthBar.Visible == false then
+	heltMaybe = false
+end
+
+
+local hlthToggle = sect3:Create("Toggle", "Healthbar Visible",
+	function(hb)
+		if hb == true then
+			game:GetService("CoreGui").ThemeProvider.TopBarFrame.RightFrame.HealthBar.Visible = true
+		elseif hb == false then
+			game:GetService("CoreGui").ThemeProvider.TopBarFrame.RightFrame.HealthBar.Visible = false
+		end
+	end,
+	{
+		default = heltMaybe
+	}
+)
+
+
+
+local threeDottoggle = sect3:Create("Toggle", "Three Dots At Tope Right Visible",
+	function(hb)
+		if hb == true then
+			game:GetService("CoreGui").ThemeProvider.TopBarFrame.RightFrame.MoreMenu.Visible = true
+		elseif hb == false then
+			game:GetService("CoreGui").ThemeProvider.TopBarFrame.RightFrame.MoreMenu.Visible = false
+		end
+	end,
+	{
+		default = true
+	}
+)
+
+
+if game.PlaceId ~= "2990100290" then
+repeat wait() 
+until localPlayer and char and char:FindFirstChild("Head") and char:FindFirstChild("Humanoid") 
+local mouse = localPlayer:GetMouse() 
+repeat wait() until mouse
+local plr = localPlayer 
+local torso = plr.Character.Head 
+local flying = false
+local deb = true 
+local ctrl = {f = 0, b = 0, l = 0, r = 0} 
+local lastctrl = {f = 0, b = 0, l = 0, r = 0} 
+local speed = 0 
+
+function Fly() 
+	local bg = Instance.new("BodyGyro", torso) 
+	bg.P = 9e4 
+	bg.maxTorque = Vector3.new(9e9, 9e9, 9e9) 
+	bg.cframe = torso.CFrame 
+	local bv = Instance.new("BodyVelocity", torso) 
+	bv.velocity = Vector3.new(0,0.1,0) 
+	bv.maxForce = Vector3.new(9e9, 9e9, 9e9) 
+	repeat wait() 
+		plr.Character.Humanoid.PlatformStand = true 
+		if ctrl.l + ctrl.r ~= 0 or ctrl.f + ctrl.b ~= 0 then 
+			speed = speed+.5+(speed/maxspeed) 
+			if speed > maxspeed then 
+				speed = maxspeed 
+			end 
+		elseif not (ctrl.l + ctrl.r ~= 0 or ctrl.f + ctrl.b ~= 0) and speed ~= 0 then 
+			speed = speed-1 
+			if speed < 0 then 
+				speed = 0 
+			end 
+		end 
+		if (ctrl.l + ctrl.r) ~= 0 or (ctrl.f + ctrl.b) ~= 0 then 
+			bv.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (ctrl.f+ctrl.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(ctrl.l+ctrl.r,(ctrl.f+ctrl.b)*.2,0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p))*speed 
+			lastctrl = {f = ctrl.f, b = ctrl.b, l = ctrl.l, r = ctrl.r} 
+		elseif (ctrl.l + ctrl.r) == 0 and (ctrl.f + ctrl.b) == 0 and speed ~= 0 then 
+			bv.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (lastctrl.f+lastctrl.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(lastctrl.l+lastctrl.r,(lastctrl.f+lastctrl.b)*.2,0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p))*speed 
+		else 
+			bv.velocity = Vector3.new(0,0.1,0) 
+		end 
+		bg.cframe = game.Workspace.CurrentCamera.CoordinateFrame * CFrame.Angles(-math.rad((ctrl.f+ctrl.b)*50*speed/maxspeed),0,0) 
+	until not flying 
+	ctrl = {f = 0, b = 0, l = 0, r = 0} 
+	lastctrl = {f = 0, b = 0, l = 0, r = 0} 
+	speed = 0 
+	bg:Destroy() 
+	bv:Destroy() 
+	plr.Character.Humanoid.PlatformStand = false 
+end
+
+
+mouse.KeyDown:connect(function(key) 
+	if key:lower() == "w" then 
+		ctrl.f = 1 
+	elseif key:lower() == "s" then 
+		ctrl.b = -1 
+	elseif key:lower() == "a" then 
+		ctrl.l = -1 
+	elseif key:lower() == "d" then 
+		ctrl.r = 1 
+	end 
+end) 
+mouse.KeyUp:connect(function(key) 
+	if key:lower() == "w" then 
+		ctrl.f = 0 
+	elseif key:lower() == "s" then 
+		ctrl.b = 0 
+	elseif key:lower() == "a" then 
+		ctrl.l = 0 
+	elseif key:lower() == "d" then 
+		ctrl.r = 0 
+	end 
+end)
+Fly()
+
+local flyToggle = sect3:Create("Keybind", "Fly Toggle", -- The name of the keybind
+	function(key)
+		if flying then flying = false 
+		else 
+			flying = true 
+			Fly()
+		end
+	end,
+	{
+		default = Enum.KeyCode.F
+	}
+)
+end
+
+local noClipState = false
+local noclipToggler = sect3:Create("Keybind", "Noclip Toggle", -- The name of the keybind
+    function()
+        noClipState = not noClipState
+        if noClipState then
+            rStep = game:GetService('RunService').Stepped:Connect(function()
+                if char:FindFirstChild'Torso' and char:FindFirstChild'Head' then
+                    char:FindFirstChild'Torso'.CanCollide = false
+                    char:FindFirstChild'Head'.CanCollide = false
+                end
+            end)
+        else
+            pcall(function() rStep:Disconnect() end)
+        end
+    end,
+    {
+        default = Enum.KeyCode.N
+    }
+)
+
+local lightSlide1 = sect3:Create("Slider", "Light Brightness",
+	function(b)
+		brightness = b
+	end,
+	{
+		min = 1,
+		max = 40,
+		default = 1,
+		precise = false,
+		changeablevalue = false
+	}
+)
+
+local lightSlide2 = sect3:Create("Slider", "Light Range",
+	function(r)
+		rangelol = r
+	end,
+	{
+		min = 3,
+		max = 60,
+		default = 8,
+		precise = false,
+		changeablevalue = false
+	}
+)
+
+local newLight = sect3:Create("Button", "Create light on player",
+	function()
+		if char.Head:FindFirstChild("PHLight") then
+			--[[function Callback(answer)
+				if answer == "Dismiss" then
+					
+				end
+			end--]]
+			 
+			local Bindable = Instance.new("BindableFunction")
+			Bindable.OnInvoke = Callback
+			
+			game.StarterGui:SetCore("SendNotification", {
+				Title = "Error";
+				Text = "You already have a light.";
+				Duration = "300";
+				Button1 = "Dismiss";
+				Icon = "rbxassetid://7714412132";
+				--Callback = Bindable
+			})
+		else
+			local lightthing = Instance.new("PointLight")
+			lightthing.Parent = char.Head
+			lightthing.Brightness = brightness
+			lightthing.Range = rangelol
+			lightthing.Name = "PHLight"
+		end
+	end,
+	{
+		animated = true
+	}
+)
+
+local delLight = sect3:Create("Button", "Delete light on player",
+	function()
+		char.Head:FindFirstChild("PHLight"):Destroy()
+	end,
+	{
+		animated = true
+	}
+)
+
+local topbarToggle = sect3:Create("Toggle", "Toggle the old Topbar",
+	function(state)
+		if state == true then
+			local GuiInset = game:GetService("GuiService"):GetGuiInset()
+			local TopbarFrame:Frame = Instance.new("Frame")
+			local topbarGui = Instance.new("ScreenGui")
+			topbarGui.Name = "PureHubTopBar"
+			topbarGui.Parent = game:GetService("Players").LocalPlayer.PlayerGui
+			topbarGui.IgnoreGuiInset = true
+			topbarGui.ResetOnSpawn = false
+			TopbarFrame.Parent = topbarGui
+			TopbarFrame.BackgroundTransparency = 0.5
+			TopbarFrame.BackgroundColor3 = Color3.fromRGB(31, 31, 31)
+			TopbarFrame.BorderSizePixel = 0
+			TopbarFrame.Size = UDim2.new(1, 0, 0, GuiInset.Y)
+		elseif state == false then
+			localPlayer.PlayerGui:FindFirstChild("PureHubTopBar"):Destroy()
+		end
+	end
+)
+
+local oldMos = sect3:Create("Toggle", "Use old mouse",
+	function(state)
+		local mouse = game.Players.LocalPlayer:GetMouse()
+		if state == true then
+			mouse.Icon = "rbxasset://textures/ArrowFarCursor.png"
+		elseif state == false then
+			mouse.Icon = "rbxasset://textures/Cursors/KeyboardMouse/ArrowFarCursor.png"
+		end
+	end
+)
+
+--Games to load
+local function drivinEmpir()
+	local categ4 = Main:CreateCategory("Driving Empire")
+	local sect5 = categ4:CreateSection("Main Hacks")
+	local drvnemprautofarm = sect5:Create("Button", "AutoFarm V2",
+		function()
+			local Players = game:GetService("Players")
+			local RunService = game:GetService("RunService")
+			local UserInputService = game:GetService("UserInputService")
+			local TweenService = game:GetService("TweenService")
+
+			local LocalPlayer = Players.LocalPlayer
+			local Character = LocalPlayer.Character
+			local Humanoid = Character:FindFirstChildWhichIsA("Humanoid")
+
+			local SeatPart = Humanoid.SeatPart
+			local deVehicle = SeatPart.Parent
+			local Wheels = deVehicle:FindFirstChild("Wheels")
+			local Body = deVehicle:FindFirstChild("Body")
+
+			if SeatPart:FindFirstAncestor("Body") then
+				deVehicle = SeatPart:FindFirstAncestor("Body").Parent
+				Wheels = (Wheels ~= nil and Wheels) or deVehicle:FindFirstChild("Wheels")
+			end
+
+			if game.PlaceId == 3351674303 then
+				Wheels = deVehicle:FindFirstChild("Core")
+			end
+
+			deVehicle.PrimaryPart = SeatPart
+
+			local function GetWheelVelocity()
+				if game.PlaceId == 3351674303 then
+					return Wheels:GetChildren()[1]["Wheel"].Velocity, Wheels:GetChildren()[1]["Wheel"].RotVelocity
+				end
+				for index, value in pairs(Wheels:GetDescendants()) do
+					if value:IsA("BasePart") then
+						return value.Velocity, value.RotVelocity
+					end
+				end
+			end
+
+			local function SetWheelVelocity(Velocity, RotVelocity)
+				for index, value in pairs(Wheels:GetDescendants()) do
+					pcall(function()
+						value.Velocity = Velocity
+						if RotVelocity ~= nil then
+							value.RotVelocity = RotVelocity
+						end
+					end)
+				end
+			end
+
+			Connection = game:GetService("RunService").Stepped:Connect(function()
+				if not deVehicle or not deVehicle.Parent or not Humanoid.SeatPart then
+					Connection:Disconnect()
+					return
+				end
+				local Speed = ((10/12) * (60/88)) * SeatPart.Velocity.Magnitude
+				if SeatPart.Position.X < -7956.56 or SeatPart.Position.X > -1557 then
+					Character.Parent = deVehicle
+					deVehicle:MoveTo(Vector3.new(-1557.57, 69.9041, 486.571))
+					Character.Parent = workspace
+				end
+				if Speed < 550 then 
+					local WV = GetWheelVelocity()
+					SetWheelVelocity(Vector3.new(-deautofrmspeed, WV["Y"], -deautofrmspeed / -5)) 
+				end
+			end)
+		end,
+		{
+			animated = true
+		}
+	)
+	deautofrmspeed = 350
+	local deautospeed = sect5:Create("TextBox", "AutoFarm Speed",
+		function(desped)
+			deautofrmspeed = desped / 2 * 3
+		end,
+		{
+			text = "350"
+		}
+	)
+
+	pumpstate = false
+	bruh = 1
+
+	--[[ -- Deprecated pumpkin autofarm circa 11/06/21
+	local pumpkinAuto = sect5:Create("Toggle", "Pumpkin AutoFarm",
+			function()
+				if pumpstate == false then
+					pumpstate = true
+					repeat
+						local pumpStor = game:GetService("Workspace").Game.Halloween.Pumpkins
+						if pumpStor:FindFirstChild("_p") then
+								v = pumpStor["_p"]
+								if v.Position.Y > 0 then
+									v.CanCollide = true
+									v.Face.CanCollide = true
+									v.Stem.CanCollide = true
+									if bruh == 1 then
+										char.HumanoidRootPart.CFrame = v.CFrame 
+										bruh = 0
+									elseif bruh == 0 then
+										char.HumanoidRootPart.CFrame = v.CFrame + Vector3.new(0, 15, 0)
+										bruh = 1
+									end
+								end
+							else
+								print("No more pumpkins detected in workspace.")
+						end
+						wait(1)
+					until pumpstate == false
+				elseif pumpstate == true then
+					pumpstate = false
+				end
+			end,
+		{
+			default = false
+		}
+	)
+
+	--]]
+
+	tpdrop = sect5:Create("Dropdown", "Teleports",
+		function(v)
+			selloctn = v
+		end,
+		{
+			options = {
+				"Autofarm Point",
+				"Cars & Mortorcycles Dealer",
+				"Boat Dealer",
+				"Helocopter & Plane Dealer",
+				"Paradise Tuning",
+				"Circuit Race",
+				"Drag Race",
+				"Highway Race"
+			},
+
+			default = "Cars & Mortorcycles Dealer",
+			search = true
+		}
+	)
+
+	local tpthingtp = sect5:Create("Button", "Tp to selected location",
+		function()
+			if selloctn == "Autofarm Point" then
+				Tpchar(CFrame.new(-1366, 67.369, 470))
+			elseif selloctn == "Cars & Mortorcycles Dealer" then
+				Tpchar(CFrame.new(-303, 16.4581, -1575))
+			elseif selloctn == "Boat Dealer" then
+				Tpchar(CFrame.new(-1874, 14.7955, 4865))
+			elseif selloctn == "Helocopter & Plane Dealer" then
+				Tpchar(CFrame.new(376, 14.7849, 3034))
+			elseif selloctn == "Circuit Race" then
+				Tpchar(CFrame.new(-5651, 14.7413, -4508))
+			elseif selloctn == "Drag Race" then
+				Tpchar(CFrame.new(-799, 25.6791, 244))
+			elseif selloctn == "Highway Race" then
+				Tpchar(CFrame.new(-148, 25.6407, -192))
+			elseif selloctn == "Paradise Tuning" then
+				Tpchar(CFrame.new(264, 25.5824, -624))
+			end
+		end,
+		{
+			animated = true
+		}
+	
+	)
+
+
+
+end
+
+local function blumbertyfoon()
+	local categ5 = Main:CreateCategory("Lumber Tycoon 2")
+	local sect6 = categ5:CreateSection("Main Hacks")
+
+	playerNames = {}
+
+	for i, v in pairs(game.Players:GetChildren()) do
+		table.insert(playerNames, v.Name)
+	end 
+
+	local selPlayer
+
+	local plrList = sect6:Create("Dropdown", "bruh",
+		function(playa)
+			selPlayer = game.Players[playa]
+		end,
+		{
+			options = playerNames,
+			"",
+			search = true
+		}
+	)
+
+	game:GetService('Players').PlayerAdded:Connect(function(player)
+		table.insert(playerNames, player.Name)
+	end)
+
+	game:GetService('Players').PlayerRemoving:Connect(function(player)
+		for i,v in pairs(playerNames) do
+			if v == player.Name then
+				table.remove(playerNames, i)
+			end
+		end
+	end)
+
+	local playerTptbuton = sect6:Create("Button", "Go to selected player",
+		function()
+			print(selPlayer.Name)
+			local waitTime = localPlayer:DistanceFromCharacter(selPlayer.Character.HumanoidRootPart.Position) / 6
+			print(waitTime)
+			local TS = game:GetService("TweenService")
+			local tween = TS:Create(char.HumanoidRootPart, TweenInfo.new(waitTime), {CFrame = selPlayer.Character.HumanoidRootPart.CFrame})
+			tween:Play()
+		end,
+		{
+			animated = true
+		}
+	)
+
+    local AntiBL=false
+
+	local blToggle = sect6:Create("Toggle", "Anti Blacklist",
+  	  function()
+  	      if AntiBL == false then	
+				AntiBL = true
+				for i,v in pairs(game:GetService("Workspace").Effects:GetChildren()) do
+					if v.Name == ("BlacklistWall")then
+						v:Destroy()
+					end
+				end
+			else
+				AntiBL=false
+			end
+ 	   end,
+		{
+			default = false
+		}
+	)
+
+	local foglolToggle = sect6:Create("Toggle", "Fog Toggle",
+  	  function(state)
+  	         if state == true then
+				 game.Lighting.FogStart = 0
+			 elseif state == false then
+				game.Lighting.FogStart = 10000
+			 end
+ 	   end,
+		{
+			default = true
+		}
+	)
+
+	--[[
+
+	item = nil -- What item you wnat to buy in the auto buy feature
+	itemQuantity = nil -- How many items you want to buy in the auto buy
+	shop1 = nil -- Woodrus
+	shop2 = nil -- Bob's shack
+	shop3 = nil -- fancy furnishings
+	shop4 = nil -- Paintings place
+	local stores = game:GetService("Workspace").Stores
+
+	for i,v in pairs(stores:GetChildren()) do
+		if shop1 == nil then
+			if v.Name == "ShopItems" and v:FindFirstChild("BasicHatchet") then
+				shop1 = v
+			end
+		end
+	end
+
+	for i,v in pairs(stores:GetChildren()) do
+		if shop2 == nil then
+			if v.Name == "ShopItems" and v:FindFirstChild("Dynamite") then
+				shop2 = v
+			end
+		end
+	end
+
+	for i,v in pairs(stores:GetChildren()) do
+		if shop3 == nil then
+			if v.Name == "ShopItems" and v:FindFirstChild("Toilet") then
+				shop3 = v
+			end
+		end
+	end
+
+	for i,v in pairs(stores:GetChildren()) do
+		if shop4 == nil then
+			if v.Name == "ShopItems" and v:FindFirstChild("Painting1") then
+				shop4 = v
+			end
+		end
+	end
+
+	local testItmsel = sect6:Create("TextBox", "Item",
+		function(v)
+			item = v
+		end,
+		{
+			text = "No item selected"
+		}
+	)
+
+	local qwontity = sect6:Create("TextBox", "Quantity",
+		function(q)
+			itemQuantity = q
+		end,
+		{
+			text = "No Quantity selected"
+		}
+	)
+
+	local autoBuyitemwithspecifiedquantity = sect6:Create("Button", "Auto Buy",
+		function(ab)
+			repeat
+				if shop1:FindFirstChild(item) then
+					item = shop1[item]
+					item.Main.CFrame = stores.WoodRUs.Counter.CFrame + Vector3.new(0, 0.5, 0)
+					wait(0.5)
+				else
+					repeat
+						wait()
+						print("bro?")
+						print(itemQuantity)
+						print(item)
+					until shop1:FindFirstChild(item)
+					wait(0.5)
+				end
+				
+				local thomlol = {
+					["Character"] = workspace.Stores.WoodRUs.Thom, 
+					["Name"] = "Thom", 
+					["ID"] = 7, 
+					["Dialog"] = workspace.Stores.WoodRUs.Thom.Dialog
+				}
+				local inti = "Initiate"
+				local cnfmPch = "ConfirmPurchase"
+				
+				game:GetService("ReplicatedStorage").NPCDialog.PlayerChatted:InvokeServer(thomlol, inti)
+				game:GetService("ReplicatedStorage").NPCDialog.PlayerChatted:InvokeServer(thomlol, cnfmPch)
+				
+				item.Main.CFrame = char.HumanoidRootPart.CFrame
+				item.Main.CFrame = char.HumanoidRootPart.CFrame
+				item.Main.CFrame = char.HumanoidRootPart.CFrame
+				itemQuantity = itemQuantity - 1
+			
+			until itemQuantity == 0
+		end,
+		{
+			animate = true
+		}
+	)
+
+	--]]
+
+end
+
+local function treelandslol()
+	local categ6 = Main:CreateCategory("Treelands")
+	local sect7 = categ6:CreateSection("Main Hacks")
+	local fruits = game:GetService("Workspace").Fruits
+	
+	local FrtTp = sect7:Create("Button", "TP Fruit To Player",
+		function()
+			for i,v in pairs(fruits:GetChildren()) do
+				if v.CFrame then
+					v.CFrame = char.HumanoidRootPart.CFrame
+				end
+			end
+		end,
+		{
+			animated = true
+		}
+	)
+
+	local FrtTp2 = sect7:Create("Button", "TP Fruit To Sell Point",
+		function()
+			for i,v in pairs(fruits:GetChildren()) do
+				if v.CFrame then
+					v.CFrame = CFrame.new(321, 927, 148)
+				end
+			end
+		end,
+		{
+			animated = true
+		}
+	)
+
+	local FreeMoney = sect7:Create("Button", "Turn All Fruit Into Pinapples",
+		function()
+			local desiredFruit = "Pineapple"
+			for i,v in pairs(fruits:GetChildren()) do
+				v.Tooltip.Value = desiredFruit
+				v.Name = desiredFruit
+				v:Clone().Parent = game.Workspace.Fruits
+			end
+		end,
+		{
+			animated = true
+		}
+	)
+
+	local FreeMoney2 = sect7:Create("Button", "Turn All Fruit Into Potatos",
+		function()
+			local desiredFruit = "Potato"
+			for i,v in pairs(fruits:GetChildren()) do
+				v.Tooltip.Value = desiredFruit
+				v.Name = desiredFruit
+				v:Clone().Parent = game.Workspace.Fruits
+			end
+		end,
+		{
+			animated = true
+		}
+	)
+
+	local FruitBye = sect7:Create("Button", "Delete All Of Your Fruit",
+		function()
+			for i,v in pairs(fruits:GetChildren()) do
+				v:Destroy()
+			end
+		end,
+		{
+			animated = true
+		}
+	)
+
+	
+	local NightLight = sect7:Create("Button", "Brighter Light Around Character",
+		function()
+			char.HumanoidRootPart.PointLight.Brightness = 10000
+			char.HumanoidRootPart.PointLight.Range = 60
+		end,
+		{
+			animated = true
+		}
+	)
+
+	tpdrop = sect7:Create("Dropdown", "Teleports",
+		function(v)
+			selfrut = v
+		end,
+		{
+			options = {
+				"Main Shack",
+				"Apple Trees",
+				"Blue Berry Bushes",
+				"Banana Trees",
+				"Big Banana Trees",
+				"Black Berry Bushes",
+				"Orange Trees",
+				"PoTAtO",
+				"Peach Trees ;)",
+				"Orange Crystal Cave",
+				"Crystal Cave",
+				"Memorial Tree",
+				"Plum Trees",
+				"Durian tree",
+				"Watermelon Bushes",
+				"Kiwi Trees",
+				"Mango Tree",
+				"Tree House"
+			},
+
+			default = "Main Shack",
+			search = true
+		}
+	)
+
+	local tpthingtp = sect7:Create("Button", "Tp to selected location",
+		function()
+			if selfrut == "Main Shack" then
+				Tpchar(CFrame.new(320, 927, 179))
+			elseif selfrut == "Apple Trees" then
+				Tpchar(CFrame.new())
+			elseif selfrut == "Blue Berry Bushes" then
+				Tpchar(CFrame.new(1028, 971, 402))
+			elseif selfrut == "Banana Trees" then
+				Tpchar(CFrame.new(2019, 1035, 273))
+			elseif selfrut == "Big Banana Trees" then
+				Tpchar(CFrame.new(2028, 1085, 250))
+			elseif selfrut == "Black Berry Bushes" then
+				Tpchar(CFrame.new(360, 992, 1292))
+			elseif selfrut == "Orange Trees" then
+				Tpchar(CFrame.new(47, 1030, 1500))
+			elseif selfrut == "PoTAtO" then
+				Tpchar(CFrame.new(-52, 1030, 1467))
+			elseif selfrut == "Peach Trees ;)" then
+				Tpchar(CFrame.new(-968, 944, 160))
+			elseif selfrut == "Orange Crystal Cave" then
+				Tpchar(CFrame.new(1198, 1043, -1249))
+			elseif selfrut == "Crystal Cave" then
+				Tpchar(CFrame.new(1163, 972, -874))
+			elseif selfrut == "Memorial Tree" then
+				Tpchar(CFrame.new(1025, 1454, -865))
+			elseif selfrut == "Plum Trees" then
+				Tpchar(CFrame.new(1000, 1413, -755))
+			elseif selfrut == "Durian tree" then
+				Tpchar(CFrame.new(1802, 1089, 1015))
+			elseif selfrut == "Watermelon Bushes" then
+				Tpchar(CFrame.new(1398, 983, 1132))
+			elseif selfrut == "Kiwi Trees" then
+				Tpchar(CFrame.new(580, 946, 44))
+			elseif selfrut == "Mango Tree" then
+				Tpchar(CFrame.new(1466, 1000, -209))
+			elseif selfrut == "Tree House" then
+				for i, v in pairs(game:GetService("Workspace").MainTrees:GetChildren()) do
+					if v.Name == plr.Name then
+						char.HumanoidRootPart.CFrame = v.SafeLocation.CFrame + Vector3.new(0, 2, 0)
+					end
+				end
+			end
+		end,
+		{
+			animated = true
+		}
+	
+	)
+end
+
+local function extrememinors()
+	local categ7 = Main:CreateCategory("Mega Miners")
+	local sect8 = categ7:CreateSection("Main Hacks")
+
+	local opgemthingidk = sect8:Create("Button", "Collect All Gems",
+		function()
+			for i,v in pairs(game.Workspace.Minerock:GetChildren()) do
+				if v.Name == "Crystal" or v.Name == "Diamond" or v.Name == "Emerald" then
+					game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position = v.Position
+					wait()
+				end
+			end
+		end,
+		{
+			animated = true
+		}
+	)
+end
+
+local function rpgSim()
+	local categ8 = Main:CreateCategory("Rpg Sim.")
+	local sect9 = categ8:CreateSection("Main Hacks")
+
+	local rpgbruhtext = categ8:Create("TextLabel", "Still working on this. Sorry.")
+end
+
+local function scrnshtnft()
+	local categ9 = Main:CreateCategory("SNFTS")
+	local sect10 = categ9:CreateSection("Main Hacks")
+
+	local nftsmfarmToggle = false
+
+	local nftaf = sect10:Create("Toggle", "Game Win AutoFarm",
+		function(state)
+			nftsmfarmToggle = state
+			if nftsmfarmToggle then
+				repeat
+					if game:GetService("Workspace").AI:FindFirstChild("Monkey") then
+						game:GetService("ReplicatedStorage").Kill:InvokeServer(game:GetService("Workspace").AI.Monkey)
+					end
+					wait()
+				until not nftsmfarmToggle
+			end
+		end
+	)
+end
+
+local function udwi()
+	local categ10 = Main:CreateCategory("UD:WI")
+	local sect11 = categ10:CreateSection("Main Hacks")
+
+	local udfarmToggle = false
+	local udbstspd = 10
+	local udbsten = false
+	local udhndbrk = false
+	local udselloc = "Teleports"
+	local hmmmmmm = 0
+	local udveh = nil
+
+	local function getVeh()
+		for i,v in pairs(game.Workspace._Main.Vehicles:GetChildren()) do    
+			if v.VehicleSeat.Values.Owner.Value == game.Players.LocalPlayer.Name then
+				udveh = v
+			end
+		end
+	end
+
+	--[[
+		sect11:Create('Toggle', 'Auto Farm Toggle',
+			function(state)
+				udfarmToggle = state
+				if udfarmToggle then
+					udveh.VehicleSeat.BoostForce.Force = Vector3.new(0,0,-12000)
+					repeat
+						hmmmmmm = hmmmmmm + 1
+						udveh:SetPrimaryPartCFrame(CFrame.new(37673.7227, 57.647377, 28142.0977, 0.478505403, 1.0740731e-07, 0.8780846, -6.94262994e-08, 1, -8.44866719e-08, -0.8780846, -2.05348361e-08, 0.478505403))
+						wait(1)
+						if hmmmmmm == 6 then
+							udveh.VehicleSeat.BoostForce.Force = Vector3.new(0,0,6000)
+						elseif hmmmmmm == 10 then
+							udveh.VehicleSeat.BoostForce.Force = Vector3.new(0,0,-12000)
+							hmmmmmm = 0
+						end
+						print(hmmmmmm)
+					until not udfarmToggle
+				else
+					udveh.VehicleSeat.BoostForce.Force = Vector3.new(0,0,0)
+				end
+			end
+		)
+	]]
+
+	sect11:Create('Toggle', 'Auto Farm Toggle',
+			function(state)
+				udfarmToggle = state
+
+				getVeh()
+
+				if udfarmToggle then
+					repeat
+						udveh:SetPrimaryPartCFrame(CFrame.new(37673.7227, 57.647377, 28142.0977, 0.478505403, 1.0740731e-07, 0.8780846, -6.94262994e-08, 1, -8.44866719e-08, -0.8780846, -2.05348361e-08, 0.478505403))
+						wait(1)
+						keypress(0x57)
+					until not udfarmToggle
+				else
+					udveh.VehicleSeat.BoostForce.Force = Vector3.new(0,0,0)
+				end
+			end
+		)
+
+	sect11:Create("TextBox", "Boost Speed",
+		function(input)
+			udbstspd = input
+		end,
+		{
+			text = "Boost Speed"
+		}
+	)
+
+	sect11:Create("KeyBind", "Boost Toggle", 
+		function()
+			udbsten = not udbsten
+
+			getVeh()
+
+			if udbsten == true then
+				udveh.VehicleSeat.BoostForce.Force = Vector3.new(0,0,udbstspd/-1*1000)
+			elseif udbsten == false then
+				udveh.VehicleSeat.BoostForce.Force = Vector3.new(0,0,0)
+			end
+		end,
+		{
+			default = Enum.KeyCode.LeftShift
+		}
+	)
+
+	sect11:Create("KeyBind", "Hand Brake", 
+		function()
+			udhndbrk = not udhndbrk
+
+			getVeh()
+
+			if udhndbrk == true then
+				udveh.VehicleSeat.BoostForce.Force = Vector3.new(0,0,100000)
+			elseif udhndbrk == false then
+				udveh.VehicleSeat.BoostForce.Force = Vector3.new(0,0,0)
+			end
+		end,
+		{
+			default = Enum.KeyCode.V
+		}
+	)
+
+	sect11:Create("DropDown", "Teleports", 
+		function(current)
+			udselloc = current
+		end,
+		{
+			options = {
+				"Westover",
+				"Kensington",
+				"Palm Shores",
+				"South Beach",
+				"Woodbury",
+				"Nomtauk",
+				"Bordenville"
+			},
+			-- Optional
+			default = "Teleports",
+			search = true
+		}
+	)
+
+	sect11:Create("Button", "Teleport To Selected Location",
+		function()
+			if udselloc == "Teleports" then
+				-- Alert notification.
+			elseif udselloc == "Westover" then
+				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2096.24, 58.9023, 5264.37)
+			elseif udselloc == "Kensington" then
+				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-4507.25, 9.2061, 891.421)
+			elseif udselloc == "Palm Shores" then
+				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2576.37, 2.80754, 1700.81)
+			elseif udselloc == "South Beach" then
+				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-3816.79, 6.55009, -9125.41)
+			elseif udselloc == "Woodbury" then
+				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-2524.76, 36.4744, 6575.35)
+			elseif udselloc == "Nomtauk" then
+				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(37395.3, 50.35, 27565.8)
+			elseif udselloc == "Bordenville" then
+				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1819.23, 22.0507, -12197.8)
+			end
+		end,
+		{
+			animated = true,
+		}
+	)
+
+	sect11:Create("Button", "Get Rifle",
+		function()
+			game:GetService("ReplicatedStorage").Events.RemoteEvent:FireServer("AddTool", {[1] = "Rifle"})
+		end,
+		{
+			animated = true,
+		}
+	)
+end
+
+local function cdt()
+	local categ11 = Main:CreateCategory("CDT")
+	local sect12 = categ11:CreateSection("Main Hacks")
+
+	local veh = nil
+	local afcount = 0
+	local cdtfarmToggle = nil
+	local cdtselloc = nil
+
+	sect12:Create("Toggle", "AutoFarm Toggle",
+		function(state)
+			cdtfarmToggle = state
+			if cdtfarmToggle then
+				for i, v in pairs(game:GetService("Workspace").Cars:GetChildren()) do
+					if v.Stats.Owner.Value == game.Players.LocalPlayer.Name then
+						veh = v
+					end
+				end
+
+				repeat
+					if afcount <= 30 then
+						keypress(0x57)
+						veh.Engine.Velocity = Vector3.new(300,0,0)
+						wait(0.2)
+						afcount = afcount + 1
+					elseif afcount <= 60 then
+						keypress(0x53)
+						veh.Engine.Velocity = Vector3.new(-300,0,0)
+						wait(0.2)
+						afcount = afcount + 1
+					else
+						afcount = 0
+						wait(0.2)
+					end
+				until not cdtfarmToggle
+			end
+		end
+	)
+	sect12:Create("Button", "Gift Farm (Spam E)",
+		function()
+			for i, v in pairs(game.Workspace.Locations:GetChildren()) do
+				if v.Active.Value == true then
+					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.SpawnPart.CFrame
+					wait(0.4)
+					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.PlayerGui.BarnGuide.Adornee.CFrame
+					wait(0.4)
+				end
+			end
+		end,
+		{
+			animated = true
+		}
+	)
+	sect12:Create("DropDown", "DropDown", 
+		function(current)
+			cdtselloc = current
+		end,
+		{
+			options = {
+				"AutoFarm Point",
+				"Your Dealership"
+			},
+			-- Optional
+			default = "AutoFarm Point",
+			search = true
+		}
+	)
+	sect12:Create("Button", "Teleport To Selected Location",
+		function()
+			if cdtselloc == "AutoFarm Point" then
+				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(609.052, 633.249, 310.141)
+			elseif cdtselloc == "Your Dealership" then
+				for i, v in pairs(game:GetService("Workspace").Tycoons:GetChildren()) do
+					if v.Owner.Value == game.Players.LocalPlayer.Name then
+						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Dealership.Spawn.CFrame
+					end
+				end
+			end
+		end,
+		{
+			animated = true,
+		}
+	)
+end
+
+--Game Loader Section
+
+local gameoneloader = sect4:Create("Button", "Load Driving Empire",
+	function()
+		drivinEmpir()
+	end,
+	{
+		animated = true
+	}
+)
+
+local gametwoloader = sect4:Create("Button", "Load Lumber Tycoon 2",
+	function()
+		blumbertyfoon()
+	end,
+	{
+		animated = true
+	}
+)
+
+local gamethreeloader = sect4:Create("Button", "Load Treelands",
+	function()
+		treelandslol()
+	end,
+	{
+		animated = true
+	}
+)
+
+local gamefourloader = sect4:Create("Button", "Load Mega Miners",
+	function()
+		extrememinors()
+	end,
+	{
+		animated = true
+	}
+)
+
+local gamefiveloader = sect4:Create("Button", "Load RPG Simulator",
+	function()
+		rpgSim()
+	end,
+	{
+		animated = true
+	}
+)
+
+local gamesixloader = sect4:Create("Button", "Load SNFTS",
+	function()
+		scrnshtnft()
+	end,
+	{
+		animated = true
+	}
+)
+
+local gamesevenloader = sect4:Create("Button", "Load Ultimate Driving: Westover Islands",
+	function()
+		udwi()
+	end,
+	{
+		animated = true
+	}
+)
+
+local gameeightloader = sect4:Create("Button", "Load Car Dealership Tycoon",
+	function()
+		cdt()
+	end,
+	{
+		animated = true
+	}
+)
+
+--Load hacks if game is supported
+
+if game.PlaceId == 404729070 then
+	treelandslol()
+elseif game.PlaceId == 13822889 then
+	blumbertyfoon()
+elseif game.PlaceId == 3351674303 then
+	drivinEmpir()
+elseif game.PlaceId == 17541179 then
+	extrememinors()
+elseif game.PlaceId == 2990100290 then
+	rpgSim()
+elseif game.PlaceId == 8304102745 then
+	scrnshtnft()
+elseif game.PlaceId == 54865335 then
+	udwi()
+elseif game.PlaceId == 1554960397 then
+	cdt()
+end
