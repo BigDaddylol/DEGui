@@ -56,8 +56,10 @@ local keychecka = sectunolol:Create("Button", "Check Key",
             _G.enteredkeycorrectly = true
             loadstring(game:HttpGet("https://raw.githubusercontent.com/BigDaddylol/DEGui/main/MainGuilol"))()
             game.CoreGui["Pure Hub Key"]:Destroy()
+	    print("Key made me nutted!")
         else 
             textythingy = "Incorrect Key"
+	    print("Key is wrong lmao.")
         end
     end,
     {
