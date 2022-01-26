@@ -1,1 +1,20 @@
+game.StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.All, false)
+
+local LBozo = Instance.new("ScreenGui")
+LBozo.Name = "L Bozo"
+LBozo.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+LBozo.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+local LBozoImage = Instance.new("ImageLabel")
+LBozoImage.Name = "L Bozo Image"
+LBozoImage.Parent = LBozo
+LBozoImage.Active = true
+LBozoImage.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+LBozoImage.BackgroundTransparency = 1.000
+LBozoImage.BorderSizePixel = 0
+LBozoImage.Size = UDim2.new(1, 0, 1, 0)
+LBozoImage.Image = "rbxassetid://8649895650"
+
+wait(1)
+
 game.Players.LocalPlayer:Kick("You are using the old version of the script. To get the new script, join discord.gg/purehub, verify with the bot, and look in #script on the discord to see instructions on how to get the new one.")
