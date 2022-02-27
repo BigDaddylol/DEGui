@@ -1,1 +1,58 @@
-print("sex")
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local TextLabel1 = Instance.new("TextLabel")
+local TextLabel2 = Instance.new("TextLabel")
+local TextButton = Instance.new("TextButton")
+
+ScreenGui.Parent = game:WaitForChild("CoreGui")
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+Frame.Position = UDim2.new(0.415625006, 0, 0.396850407, 0)
+Frame.Size = UDim2.new(0, 215, 0, 130)
+
+TextLabel1.Name = "TextLabel1"
+TextLabel1.Parent = Frame
+TextLabel1.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel1.BackgroundTransparency = 1.000
+TextLabel1.Size = UDim2.new(0, 215, 0, 32)
+TextLabel1.Text = "Pure Hub is down"
+TextLabel1.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel1.TextSize = 19.000
+TextLabel1.TextStrokeTransparency = 0.000
+
+TextLabel2.Name = "TextLabel2"
+TextLabel2.Parent = Frame
+TextLabel2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel2.BackgroundTransparency = 1.000
+TextLabel2.Position = UDim2.new(0, 0, 0.253846169, 0)
+TextLabel2.Size = UDim2.new(0, 215, 0, 65)
+TextLabel2.Text = "Artanis ruined it for everyone. Fuck Artanis. (Literally. His ip is: 24.222.138.37)"
+TextLabel2.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel2.TextScaled = true
+TextLabel2.TextSize = 14.000
+TextLabel2.TextWrapped = true
+
+TextButton.Parent = Frame
+TextButton.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+TextButton.BorderSizePixel = 0
+TextButton.Position = UDim2.new(0.195348844, 0, 0.773999989, 0)
+TextButton.Size = UDim2.new(0, 128, 0, 21)
+TextButton.Text = "Bet. I'm going to fuck him."
+TextButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextButton.TextScaled = true
+TextButton.TextSize = 14.000
+TextButton.TextStrokeTransparency = 0.000
+TextButton.TextWrapped = true
+
+-- Scripts:
+
+local function FTIEVX_fake_script() -- TextButton.LocalScript 
+	local script = Instance.new('LocalScript', TextButton)
+
+	script.Parent.MouseButton1Click:Connect(function()
+		ScreenGui:Destroy()
+	end)
+end
+coroutine.wrap(FTIEVX_fake_script)()
